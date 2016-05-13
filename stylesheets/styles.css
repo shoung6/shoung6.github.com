@@ -984,7 +984,7 @@ footer {
     color: #444;
   }
 }
-@media print, screen and (max-height: 680px) {
+@media print, screen and (max-height: 980px) {
   footer {
     text-align: center;
     margin: 20px auto;
@@ -1008,3 +1008,20 @@ footer {
     width: auto;
   }
 }
+
+
+.demo{
+    position: absolute;
+    left: 50%;
+    margin-left: -185px;
+    padding: 10px 12px;
+    margin-top: 6px;
+    line-height: 14px;
+    font-size: 14px;
+    background-color: #FFE788;
+}
+
+
+
+
+
