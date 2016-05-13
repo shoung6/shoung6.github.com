@@ -1010,7 +1010,7 @@ footer {
 }
 
 
-.demo{
+#banner .demo{
     position: absolute;
     left: 50%;
     margin-left: -185px;
