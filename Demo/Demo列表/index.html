@@ -5,11 +5,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="renderer" content="webkit">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>index</title>
+        <title>Demo列表</title>
         <link rel="stylesheet" href="css/reset.css">
         <style>
             body{
                 background-color: #efefef;
+            }
+            .tu{
+                width: 50px;
+                position: absolute;
+                top: 88px;
+                left: 37px;
+                
             }
             a:hover{
                 margin-left: 8px;
@@ -39,8 +46,8 @@
                 font-size: 18px;
                 color: #398439;
                 position: absolute;
-                top: 150px;
-                left: 40px;
+                top: 170px;
+                left: 80px;
             }
             .lis5{
                 font-size: 28px;
@@ -73,14 +80,24 @@
         </style>
     </head>
     <body>
-        <a class="lis1" href="../BootstrapJQ注册验证/index.html">BootstrapJQ注册验证</a>
-        <a class="lis2" href="../滑动下划线/index.html">滑动下划线</a>
-        <a class="lis3" href="../JQ图片拖动放大缩小完善/index.html">JQ图片拖动放大缩小完善</a>
-        <a class="lis4" href="../不定宽高居中nec版/index.html">不定宽高居中nec版</a>
-        <a class="lis5" href="../不定高垂直居中/index.html">不定高垂直居中</a>
-        <a class="lis6" href="../简洁清爽多功能多皮肤时间日期控制效果/index.html">简洁多功能皮肤时间日期插件</a>
-        <a class="lis7" href="../轮播 图片放大器/fjh2.html">轮播图</a>
-        <a class="lis8" href="../轮播 图片放大器/fjh3.html">图片放大器插件</a>
+        <img class="tu" src="img/tusiji.gif" alt="兔斯基"/>
+        <a class="lis1" href="../BootstrapJQ注册验证/index.html" target="_blank">BootstrapJQ注册验证</a>
+        <a class="lis2" href="../滑动下划线/index.html" target="_blank">滑动下划线</a>
+        <a class="lis3" href="../JQ图片拖动放大缩小完善/index.html" target="_blank">JQ图片拖动放大缩小完善</a>
+        <a class="lis4" href="../不定宽高居中nec版/index.html" target="_blank">不定宽高居中nec版</a>
+        <a class="lis5" href="../不定高垂直居中/index.html" target="_blank">不定高垂直居中</a>
+        <a class="lis6" href="../简洁清爽多功能多皮肤时间日期控制效果/index.html" target="_blank">简洁多功能皮肤时间日期插件</a>
+        <a class="lis7" href="../轮播 图片放大器/fjh2.html" target="_blank">轮播图</a>
+        <a class="lis8" href="../轮播 图片放大器/fjh3.html" target="_blank">图片放大器插件</a>
         <script src="js/jquery-1.12.3.min.js"></script>
+        <script>
+            $("a").hover(function(){
+                var b=parseInt($(this).css("left"));
+                var d=(48-parseInt($(this).css("fontSize"))*1.3)/2;
+                var c=parseInt($(this).css("top"));
+                $(".tu").stop(true,false).animate({left:b-33+"px",top:c-d+5+"px"},200);
+                $(".tu").animate({left:b-63+"px",top:c-d+"px"},200);
+            })
+        </script>
     </body>
 </html>
