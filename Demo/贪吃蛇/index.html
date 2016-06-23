@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>贪吃蛇</title>
+        <link rel="stylesheet" href="css/reset.css">
+		<style>
+            td{
+                width: 15px;
+                height: 15px;
+                background-color: beige;
+            }
+            .cover{
+                background-color: aqua;
+            }
+            
+            .food{
+                background-color: chartreuse;
+            }
+            #snakewrap{
+                display: inline-block;
+            }
+            .main{
+                text-align: center;
+                margin-top: 20px;
+            }
+		</style>
+		<script>
+		    
+		</script>
+	</head>
+	<body>
+	    <div class="main">
+	    	<div id="snakewrap"></div><br />
+            <h3>点击屏幕或按键盘上下左右键操控</h3>
+            <button type="button" onclick="start()">开始</button>
+	    </div>
+        
+        <script>
+            var mapW=20,
+                mapH=20,
+                len=5,//初始化蛇长度
+                directkey=39,
+                snakeTimer,
+                snake=new Array(),
+                gridElems = multiArray(mapW,mapH), //单元格对象
+                carrier = multiArray(mapW,mapH),//标记蛇体
+                snakeWrap=document.getElementById("snakewrap");
+            document.onkeydown = attachEvents; //绑定方向事件
+            creatMap();
+            function start(){
+                snake=new Array(), //重置单元格对象
+                carrier = multiArray(mapW,mapH);//重置
+                for(var y = 0; y < gridElems.length; y++) {
+                    for(var x = 0; x < gridElems[y].length; x++) {
+                        gridElems[x][y].className = "";
+                    }
+                }
+                initSnake();
+                addObject("food");
+                directkey=39;
+                run();
+            }
+            //创建二维数组
+            function multiArray(m,n) {
+                var arr =  new Array(n);
+                for(var i=0; i<m; i++) 
+                    arr[i] = new Array(m);
+                return arr;
+            }
+            //创建地图
+            function creatMap(){
+                var table=document.createElement("table");
+                var tbody=document.createElement("tbody");
+                for (var i=0;i<mapH;i++) {
+                    var tr=document.createElement("tr");
+                    for (var j=0;j<mapW;j++) {
+                        var td=document.createElement("td");
+                        gridElems[j][i] = tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+                table.appendChild(tbody);
+                snakewrap.appendChild(table);
+            }
+            //初始化蛇体
+            function initSnake() {
+                var x=10,y=6;
+                for(var i=0;i<len;i++){
+                    x=x-1;
+                    snake.push([x,y]);
+                    carrier[x][y] = "cover"; //标记snake body
+                }
+            }
+            //判断按键
+            function attachEvents(e) {
+                e = e || event;
+                directkey = Math.abs(e.keyCode - directkey) != 2 && e.keyCode > 36 && e.keyCode < 41 ? e.keyCode : directkey;
+//              return false;
+            }
+            //判断鼠标事件
+            document.onclick=function(e){
+                var headX=snake[0][0];
+                var headY=snake[0][1];
+                var snakHeadX=gridElems[headX][headY].getBoundingClientRect().left;
+                var snakHeadY=gridElems[headX][headY].getBoundingClientRect().top;
+                var mX=e.pageX;
+                var mY=e.pageY;
+                if(directkey==37||directkey==39){
+                    if(mY>snakHeadY){
+                        directkey=40;
+                    }
+                    else{
+                        directkey=38;
+                    }
+                }
+                else{
+                    if(mX>snakHeadX){
+                        directkey=39;
+                    }
+                    else{
+                        directkey=37;
+                    }
+                }
+//              alert(snakHeadX+'i'+mX+'i'+snakHeadY+'i'+mY);
+            }
+            //产生指定范围随机点
+            function randomPointer(startX,startY,endX,endY) {
+                startX = startX || 0;//如果startX不存在，则把0赋值给他
+                startY = startY || 0;
+                endX = endX || mapW;
+                endY = endY || mapH;
+                var p = [],
+                    x = Math.floor(Math.random()*(endX - startX)) + startX,
+                    y = Math.floor(Math.random()*(endY - startY)) + startY;
+                if(carrier[x][y]) return randomPointer(startX,startY,endX,endY);
+                p[0] = x;
+                p[1] = y;
+                return p;
+            }
+            function addObject(name) {
+                var p = randomPointer(); //获取随机点
+                var x = p[0];
+                var y = p[1];
+                carrier[x][y] = name;
+                gridElems[x][y].className = name;
+            }
+            //每隔固定时间判断函数
+            function judge() {
+                var headX=snake[0][0];
+                var headY=snake[0][1];
+                switch(directkey) {
+                    case 37: headX -= 1; break; //left
+                    case 38: headY -= 1; break; //up
+                    case 39: headX += 1; break  //right
+                    case 40: headY += 1; break; //down
+                }
+                if(headX==20){
+                    headX=0;
+                }
+                if(headX==-1){
+                    headX=19;
+                }
+                if(headY==20){
+                    headY=0;
+                }
+                if(headY==-1){
+                    headY=19;
+                }
+                //如果头元素的carrier不是food，则让snake的最后一项消失
+                if(carrier[headX][headY] != "food") {
+                    var lastX = snake[snake.length-1][0],
+                        lastY = snake[snake.length-1][1];
+                    carrier[lastX][lastY] = false;
+                    gridElems[lastX][lastY].className = "";
+                    snake.pop();
+                }
+                else {
+                    carrier[headX][headY] = false;
+                    addObject("food"); //吃掉食物，然后调用addObject("food")，重新生成食物
+                }
+                if(carrier[headX][headY] == "cover") {
+                    alert("狗带");
+                    window.clearInterval(snakeTimer);
+                }
+                snake.unshift([headX,headY]);
+                carrier[headX][headY]="cover";
+                gridElems[headX][headY].className = "cover";
+            }
+            function run() {
+                if(snakeTimer) {
+                    window.clearInterval(snakeTimer);
+                }
+                snakeTimer = window.setInterval(judge,300);
+            }
+        </script>
+	</body>
+</html>
