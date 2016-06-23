@@ -13,6 +13,21 @@
                 height: 15px;
                 background-color: beige;
             }
+            h2{
+                display: inline-block;
+                margin-bottom: 10px;
+            }
+            h3{
+                line-height: 2;
+            }
+            button{
+                border: none;
+                background-color: #50B5E0;
+                color: #fff;
+                font-size: 14px;
+                padding: 3px 8px;
+                margin-top: 10px;
+            }
             .cover{
                 background-color: aqua;
             }
@@ -34,22 +49,24 @@
 	</head>
 	<body>
 	    <div class="main">
+            <h2>得分</h2><h2 id="score">0</h2><br />
 	    	<div id="snakewrap"></div><br />
-            <h3>点击屏幕或按键盘上下左右键操控</h3>
             <button type="button" onclick="start()">开始</button>
 	    </div>
         
         <script>
             var mapW=20,
                 mapH=20,
-                len=5,//初始化蛇长度
+                len=3,//初始化蛇长度
                 directkey=39,
+                speed=300,
+                score=0,//分数
                 snakeTimer,
                 snake=new Array(),
                 gridElems = multiArray(mapW,mapH), //单元格对象
                 carrier = multiArray(mapW,mapH),//标记蛇体
                 snakeWrap=document.getElementById("snakewrap");
-            document.onkeydown = attachEvents; //绑定方向事件
+            document.onkeydown = attachEvents; //绑定按键事件
             creatMap();
             function start(){
                 snake=new Array(), //重置单元格对象
@@ -180,10 +197,14 @@
                 }
                 else {
                     carrier[headX][headY] = false;
+                    score++;
+                    speed=0.9*speed;
+                    run();
+                    document.getElementById("score").innerHTML=score;
                     addObject("food"); //吃掉食物，然后调用addObject("food")，重新生成食物
                 }
                 if(carrier[headX][headY] == "cover") {
-                    alert("狗带");
+                    alert("狗带~得分："+score);
                     window.clearInterval(snakeTimer);
                 }
                 snake.unshift([headX,headY]);
@@ -194,7 +215,7 @@
                 if(snakeTimer) {
                     window.clearInterval(snakeTimer);
                 }
-                snakeTimer = window.setInterval(judge,300);
+                snakeTimer = window.setInterval(judge,speed);
             }
         </script>
 	</body>
