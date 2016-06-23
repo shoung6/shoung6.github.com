@@ -25,7 +25,8 @@
                 background-color: #50B5E0;
                 color: #fff;
                 font-size: 14px;
-                padding: 3px 8px;
+                line-height: 1.6;
+                padding: 0 8px;
                 margin: 10px 0;
             }
             .cover{
@@ -73,7 +74,9 @@
             document.onkeydown = attachEvents; //绑定按键事件
             creatMap();
             function start(){
-                snake=new Array(), //重置单元格对象
+                speed=300;
+                score=0;
+                snake=new Array(); //重置单元格对象
                 carrier = multiArray(mapW,mapH);//重置
                 for(var y = 0; y < gridElems.length; y++) {
                     for(var x = 0; x < gridElems[y].length; x++) {
