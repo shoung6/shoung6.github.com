@@ -72,7 +72,7 @@
                         <input type="text" class="form-control" id="nicheng" placeholder="请输入您的昵称">
                     </div>
                     <div class="col-sm-9 col-sm-offset-3 col-xs-12 hidden tip">
-                        <strong class="tishi">请输入3-12位字符</strong>
+                        <strong class="tishi">请输入3-12位中文、字母、数字或_</strong>
                     </div>
                 </div>
                 <div class="form-group">
@@ -99,7 +99,7 @@
                         <input type="text" class="form-control" id="inputPhone" placeholder="请输入您的手机号">
                     </div>
                     <div class="col-sm-9 col-sm-offset-3 col-xs-12 tip hidden">
-                        <strong class="tishi">请输入11位手机号</strong>
+                        <strong class="tishi">请正确输入11位中国大陆手机号</strong>
                     </div>
                 </div>
                 <div class="form-group">
@@ -132,7 +132,7 @@
                     //验证昵称
                     if ($(this).is('#nicheng')) {
                         var $a = $(this).parent().parent();
-                        if (this.value == "" || this.value.length < 3 || this.value.length > 12) {
+                        if (this.value == "" || this.value.length < 3 || this.value.length > 12||!/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/.test(this.value)) {
                             var $a = $(this).parent().parent();
                             $a.addClass("has-error");
                             $a.find(".tip").removeClass("hidden")
@@ -176,7 +176,7 @@
                     //验证手机号
                     if ($(this).is('#inputPhone')) {
                         var $a = $(this).parent().parent();
-                        if (this.value.length!=11) {
+                        if (this.value.length!=11||!/^1[3|4|5|8][0-9]{9}$/.test(this.value)) {
                             $a.addClass("has-error");
                             $a.find(".tip").removeClass("hidden")
                                 .addClass("show");
