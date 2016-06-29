@@ -127,6 +127,7 @@
             }
             //判断鼠标事件
             document.onclick=function(e){
+                e = e || event;
                 var headX=snake[0][0];
                 var headY=snake[0][1];
                 var snakHeadX=gridElems[headX][headY].getBoundingClientRect().left;
