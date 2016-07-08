@@ -1,0 +1,32 @@
+.dxg1{
+    padding:20px 34px;
+}
+.dxg2{
+    border-left: 3px solid #e7e7e7;
+    height: 22px;
+    font-size: 12px;
+    color: #999;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+.dxg3{
+    border-left: 3px solid #e7e7e7;
+    padding-left: 22px;
+    position: relative;
+}
+.dxg4{
+    padding:10px 26px;
+    border: 1px solid #e7e7e7;
+    display: inline-block;
+    border-radius: 5px;
+    box-shadow:-1px 2px 3px #e7e5e5;
+}
+.dxg4 p{
+    line-height: 35px;
+}
+.dxg5{
+    position: absolute;
+    top: -7px;
+    left: -9px;
+}
+
