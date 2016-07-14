@@ -47,18 +47,15 @@
             .m-date_tit_mar{
                 margin: 0 5px;
             }
-            .m-date_tit_mar:hover,.m-date_tit_nex-yea:hover,.m-date_tit_pre-yea:hover{
-                color: coral;
-            }
         </style>
     </head>
     <body>
-        <span>开始日：</span>
+        <span>生日：</span>
         <div class="ipt-date j-start">2016-7-4</div>
-        <span>结束日：</span>
+        <span>入学日期：</span>
         <div class="ipt-date2 j-end">2016-7-4</div>
         <div class="m-date" onselectstart="return false">
-            <div class="m-date_tit">	
+            <div class="m-date_tit">    
                 <span class="m-date_tit_pre-yea">&lt;&lt;</span>
                 <span class="m-date_tit_mar m-date_tit_pre-mon">&lt;</span>
                 <span class="m-date_tit_year"></span>
@@ -102,24 +99,17 @@
         </div>
         <script src="js/jquery-1.12.3.min.js"></script>
         <script>
-            $(function(){
+            function DateSel(ipt){
                     //初始化开始时间为今天时间
                     var nowYear=parseInt(new Date().getFullYear());
                     var nowMonth=parseInt(new Date().getMonth());
                     var iptYear=nowYear;
                     var iptMonth=nowMonth+1;
                     var iptDay=parseInt(new Date().getDate());
-                    $(".j-start").text(iptYear+"-"+iptMonth+"-"+iptDay);
-                    //初始化结束时间为今天时间
-                    var nowYear2=nowYear;
-                    var nowMonth2=nowMonth;
-                    var iptYear2=iptYear;
-                    var iptMonth2=iptMonth;
-                    var iptDay2=iptDay;
-                    $(".j-end").text(iptYear2+"-"+iptMonth2+"-"+iptDay2);
+                    $(ipt).text(iptYear+"-"+iptMonth+"-"+iptDay);
                     //点击出现选择框
-                    $(".j-start").click(function(){
-                        reTbl(nowYear,nowMonth,true);
+                    $(ipt).click(function(){
+                        reTbl(nowYear,nowMonth);
                         //下个月
                         $(".m-date_tit_nex-mon").unbind().click(function(){
                             nowMonth++;
@@ -127,7 +117,7 @@
                                 nowMonth=0;
                                 nowYear++;
                             }
-                            reTbl(nowYear,nowMonth,true);
+                            reTbl(nowYear,nowMonth);
                         })
                         //上个月
                         $(".m-date_tit_pre-mon").unbind().click(function(){
@@ -136,51 +126,20 @@
                                 nowMonth=11;
                                 nowYear--;
                             }
-                            reTbl(nowYear,nowMonth,true);
+                            reTbl(nowYear,nowMonth);
                         })
                         //下一年
                         $(".m-date_tit_nex-yea").unbind().click(function(){
                             nowYear++;
-                            reTbl(nowYear,nowMonth,true);
+                            reTbl(nowYear,nowMonth);
                         })
                         //上一年
                         $(".m-date_tit_pre-yea").unbind().click(function(){
                             nowYear--;
-                            reTbl(nowYear,nowMonth,true);
+                            reTbl(nowYear,nowMonth);
                         })
                     })
-                    $(".j-end").click(function(){
-                        reTbl(nowYear2,nowMonth2,false);
-                        //下个月
-                        $(".m-date_tit_nex-mon").unbind().click(function(){
-                            nowMonth2++;
-                            if(nowMonth2==12){
-                                nowMonth2=0;
-                                nowYear2++;
-                            }
-                            reTbl(nowYear2,nowMonth2,false);
-                        })
-                        //上个月
-                        $(".m-date_tit_pre-mon").unbind().click(function(){
-                            nowMonth2--;
-                            if(nowMonth2==-1){
-                                nowMonth2=11;
-                                nowYear2--;
-                            }
-                            reTbl(nowYear2,nowMonth2,false);
-                        })
-                        //下一年
-                        $(".m-date_tit_nex-yea").unbind().click(function(){
-                            nowYear2++;
-                            reTbl(nowYear2,nowMonth2,false);
-                        })
-                        //上一年
-                        $(".m-date_tit_pre-yea").unbind().click(function(){
-                            nowYear2--;
-                            reTbl(nowYear2,nowMonth2,false);
-                        })
-                    })
-                    $(".j-start,.j-end").click(function(event){
+                    $(ipt).click(function(event){
                         var iptTop=$(this).offset().top+$(this).height()+3;
                         var iptLeft=$(this).offset().left;
                         $(".m-date").css({left:iptLeft,top:iptTop+"px",display:"block"});
@@ -195,18 +154,13 @@
                         $(".m-date").hide();
                     })
                     //更新表格
-                    function reTbl(newYear,newMonth,a){
-                        if (a){
-                            var iptY=iptYear;
-                            var iptM=iptMonth;
-                            var iptD=iptDay;
-                        }else{
-                            var iptY=iptYear2;
-                            var iptM=iptMonth2;
-                            var iptD=iptDay2;
-                        }
+                    function reTbl(newYear,newMonth){
+                        var iptY=iptYear;
+                        var iptM=iptMonth;
+                        var iptD=iptDay;
                         var newDate=new Date(newYear,newMonth);
                         var oneWeek=parseInt(newDate.getDay());//这月第一天星期几
+                        console.log(DateSel.nowYear);
                         var maxDay=new Date(newYear,newMonth+1,0).getDate();//这月最后一天日期
                         $(".m-date_tbl td").css({backgroundColor:"#fff",color:"#333"});
                         if(iptY==newYear&&iptM==newMonth+1){
@@ -226,17 +180,10 @@
                             })
                             //点击事件
                             .click(function(){
-                                if(a){
-                                    iptDay=parseInt($(this).text());
-                                    iptYear=nowYear;
-                                    iptMonth=nowMonth+1;
-                                    $(".j-start").text(iptYear+"-"+iptMonth+"-"+iptDay);
-                                }else{
-                                    iptDay2=parseInt($(this).text());
-                                    iptYear2=nowYear2;
-                                    iptMonth2=nowMonth2+1;
-                                    $(".j-end").text(iptYear2+"-"+iptMonth2+"-"+iptDay2);
-                                }
+                                iptDay=parseInt($(this).text());
+                                iptYear=nowYear;
+                                iptMonth=nowMonth+1;
+                                $(ipt).text(iptYear+"-"+iptMonth+"-"+iptDay);
                                 $(".m-date").hide();
                             });
                             oneWeek++;
@@ -245,7 +192,9 @@
                         newMonth++;
                         $(".m-date_tit_month").text(newMonth);
                     }
-            })
+            }
+            DateSel(".j-start");
+            DateSel(".j-end");
         </script>
     </body>
 </html>
