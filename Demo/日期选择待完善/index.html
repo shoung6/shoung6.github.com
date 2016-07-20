@@ -160,7 +160,6 @@
                         var iptD=iptDay;
                         var newDate=new Date(newYear,newMonth);
                         var oneWeek=parseInt(newDate.getDay());//这月第一天星期几
-                        console.log(DateSel.nowYear);
                         var maxDay=new Date(newYear,newMonth+1,0).getDate();//这月最后一天日期
                         $(".m-date_tbl td").css({backgroundColor:"#fff",color:"#333"});
                         if(iptY==newYear&&iptM==newMonth+1){
@@ -174,7 +173,7 @@
                                 $(this).css({backgroundColor:"coral",color:"#fff"});
                             },
                             function(){
-                                if(iptY!==newYear||iptM!==newMonth+1||iptD!==parseInt($(this).text())){
+                                if(iptY!==newYear||iptM!==newMonth||iptD!==parseInt($(this).text())){
                                     $(this).css({backgroundColor:"#fff",color:"#333"});
                                 }
                             })
